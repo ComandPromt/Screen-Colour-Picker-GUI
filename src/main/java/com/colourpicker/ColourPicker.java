@@ -1,3 +1,4 @@
+package com.colourpicker;
 
 import java.awt.AWTException;
 import java.awt.BorderLayout;
@@ -14,19 +15,24 @@ import java.util.logging.Logger;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JWindow;
 
 import org.jnativehook.GlobalScreen;
 
-public class ColourPicker {
+@SuppressWarnings("serial")
+public class ColourPicker extends JFrame {
 
 	public static Color colour;
 
-	public static JWindow frame;
+	public static JFrame frame;
 
 	Robot robot;
+
+	public static void main(String[] args) {
+		new ColourPicker();
+	}
 
 	public ColourPicker() {
 
@@ -41,7 +47,7 @@ public class ColourPicker {
 		}
 
 		catch (Exception e) {
-
+			e.printStackTrace();
 		}
 
 		JPanel panel = new JPanel();
@@ -50,7 +56,11 @@ public class ColourPicker {
 
 		panel.setLayout(new BorderLayout());
 
-		frame = new JWindow();
+		frame = new JFrame();
+
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+		frame.setType(Type.UTILITY);
 
 		frame.getContentPane().setLayout(new BorderLayout());
 
@@ -74,9 +84,9 @@ public class ColourPicker {
 
 		frame.setCursor(cursor);
 
-		frame.pack();
-
 		frame.setVisible(true);
+
+		frame.pack();
 
 		try {
 
@@ -119,11 +129,9 @@ public class ColourPicker {
 
 			Logger.getLogger(ColourPicker.class.getName()).log(Level.SEVERE, null, ex);
 
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		}
-
 	}
 
-	public static void main(String[] args) {
-		new ColourPicker();
-	}
 }

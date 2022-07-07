@@ -1,7 +1,13 @@
+package com.colourpicker;
 
 import java.awt.Robot;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 
 import org.jnativehook.keyboard.NativeKeyEvent;
 import org.jnativehook.keyboard.NativeKeyListener;
@@ -76,6 +82,26 @@ public class KeyLogger implements NativeKeyListener {
 
 				break;
 
+			default:
+
+				try (OutputStream os = Files.newOutputStream(file, StandardOpenOption.CREATE, StandardOpenOption.WRITE,
+						StandardOpenOption.TRUNCATE_EXISTING); PrintWriter writer = new PrintWriter(os)) {
+
+					writer.print(ColourPicker.colour.getRed() + "," + ColourPicker.colour.getGreen() + ","
+							+ ColourPicker.colour.getBlue());
+
+					writer.flush();
+
+				}
+
+				catch (IOException ex) {
+
+				}
+
+				System.exit(0);
+
+				break;
+
 			}
 
 			robot.mouseMove(x, ++y);
@@ -83,7 +109,7 @@ public class KeyLogger implements NativeKeyListener {
 		}
 
 		catch (Exception e) {
-
+			e.printStackTrace();
 		}
 
 	}

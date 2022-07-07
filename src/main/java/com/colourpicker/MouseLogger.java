@@ -1,3 +1,4 @@
+package com.colourpicker;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -7,30 +8,12 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
-import org.jnativehook.GlobalScreen;
-import org.jnativehook.NativeHookException;
 import org.jnativehook.mouse.NativeMouseEvent;
 import org.jnativehook.mouse.NativeMouseListener;
 
 public class MouseLogger implements NativeMouseListener {
 
 	private static final Path file = Paths.get("color.txt");
-
-	public static void main(String[] args) {
-
-		try {
-
-			GlobalScreen.registerNativeHook();
-
-		}
-
-		catch (NativeHookException e) {
-
-		}
-
-		GlobalScreen.addNativeMouseListener(new MouseLogger());
-
-	}
 
 	@Override
 	public void nativeMouseClicked(NativeMouseEvent nativeEvent) {
