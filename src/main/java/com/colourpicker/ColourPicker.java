@@ -3,26 +3,31 @@ package com.colourpicker;
 import java.awt.AWTException;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.MouseInfo;
 import java.awt.Rectangle;
 import java.awt.Robot;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Date;
 
 import javax.swing.BorderFactory;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import org.jnativehook.GlobalScreen;
 
-@SuppressWarnings("serial")
-public class ColourPicker extends JFrame {
+@SuppressWarnings("all")
+
+public class ColourPicker extends JFrame implements ActionListener, ChangeListener {
 
 	public static Color colour;
 
@@ -30,11 +35,21 @@ public class ColourPicker extends JFrame {
 
 	Robot robot;
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws AWTException {
+
 		new ColourPicker();
+
 	}
 
-	public ColourPicker() {
+	public ColourPicker() throws AWTException {
+
+		getContentPane().setBackground(Color.WHITE);
+
+		setTitle("ColourPicker");
+
+		initComponents();
+
+		robot = new Robot();
 
 		try {
 
@@ -47,7 +62,9 @@ public class ColourPicker extends JFrame {
 		}
 
 		catch (Exception e) {
+
 			e.printStackTrace();
+
 		}
 
 		JPanel panel = new JPanel();
@@ -57,6 +74,12 @@ public class ColourPicker extends JFrame {
 		panel.setLayout(new BorderLayout());
 
 		frame = new JFrame();
+
+		frame.setUndecorated(true);
+
+		frame.setShape(new RoundRectangle2D.Double(0, 0, 200, 200, 100, 100));
+
+		frame.setResizable(false);
 
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
@@ -80,17 +103,11 @@ public class ColourPicker extends JFrame {
 
 		panel_1.add(lblNewLabel);
 
-		Cursor cursor = new Cursor(Cursor.CROSSHAIR_CURSOR);
-
-		frame.setCursor(cursor);
-
 		frame.setVisible(true);
 
 		frame.pack();
 
 		try {
-
-			robot = new Robot();
 
 			while (true) {
 
@@ -113,7 +130,7 @@ public class ColourPicker extends JFrame {
 
 				panel.validate();
 
-				Thread.sleep(10);
+				Thread.sleep(400);
 
 			}
 
@@ -121,17 +138,48 @@ public class ColourPicker extends JFrame {
 
 		catch (InterruptedException ex) {
 
-			Logger.getLogger(ColourPicker.class.getName()).log(Level.SEVERE, null, ex);
-
 		}
 
-		catch (AWTException ex) {
+		catch (Exception ex) {
 
-			Logger.getLogger(ColourPicker.class.getName()).log(Level.SEVERE, null, ex);
-
-		} catch (Exception ex) {
 			ex.printStackTrace();
+
 		}
+
+		this.setVisible(true);
+
+	}
+
+	private void initComponents() {
+
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+		setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
+		setResizable(false);
+
+		Date myDate = new Date();
+
+		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+
+		layout.setHorizontalGroup(layout.createParallelGroup(Alignment.TRAILING).addGap(0, 847, Short.MAX_VALUE));
+
+		layout.setVerticalGroup(layout.createParallelGroup(Alignment.LEADING).addGap(0, 600, Short.MAX_VALUE));
+
+		getContentPane().setLayout(layout);
+
+		setSize(new Dimension(104, 102));
+
+		setLocationRelativeTo(null);
+
+	}
+
+	public void stateChanged(ChangeEvent e) {
+
+	}
+
+	public void actionPerformed(ActionEvent e) {
+
 	}
 
 }
